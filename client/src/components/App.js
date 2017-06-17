@@ -1,6 +1,8 @@
 import React from 'react'
 import Repo from './Repo'
 
+const sortRepos = repos => repos.sort((a, b) => new Date(b.repo.pushed_at) - new Date(a.repo.pushed_at))
+
 const App = ({ data }) => {
   return (
     <div className='container'>
@@ -12,7 +14,7 @@ const App = ({ data }) => {
 
       <div className='row App-body'>
         <div className='col-xs-12'>
-          {data.map(repo => (<Repo repo={repo} />))}
+          {sortRepos(data).map(repo => (<Repo repo={repo} />))}
         </div>
       </div>
     </div>
