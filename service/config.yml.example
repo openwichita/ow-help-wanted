@@ -1,0 +1,4 @@
+stage: dev
+profile: default
+github_username: yourusername
+github_auth_token: dwhateveryourgithubauthtokenisgoeshere29
