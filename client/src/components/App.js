@@ -21,6 +21,4 @@ const App = ({ data }) => {
   )
 }
 
-// TODO: get issues before rendering?
-
 export default App
