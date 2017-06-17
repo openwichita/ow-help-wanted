@@ -1,19 +1,18 @@
 import React from 'react'
 import IssueRow from './IssueRow'
 
-const IssueList = ({ issues, repo }) => {
+const IssueList = ({ issues }) => {
   return (
     <table className='table table-bordered'>
       <thead>
         <tr>
-          <th>Project</th>
           <th>Issue</th>
           <th>Tags</th>
-          <th>Opened</th>
+          <th>Opened On</th>
         </tr>
       </thead>
       <tbody>
-        {issues.map(issue => <IssueRow issue={issue} repo={repo} />)}
+        {issues.map(issue => <IssueRow issue={issue} />)}
       </tbody>
     </table>
   )

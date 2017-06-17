@@ -5,11 +5,12 @@ const Repo = ({ repo: { repo, issues } }) => {
   return (
     <div className='panel panel-default'>
       <div className='panel-heading'>
-        <h3 className='panel-title'>
-          <a href={repo.url}>{repo.name}</a>
-        </h3>
+        <span class="pull-right">{repo.description}</span>
+        <h1 className='panel-title'>
+          <a href={repo.html_url}>{repo.name}</a>
+        </h1>
       </div>
-      <IssueList issues={issues} repo={repo} />
+      <IssueList issues={issues} />
     </div>
   )
 }

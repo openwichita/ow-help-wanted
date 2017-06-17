@@ -1,8 +1,10 @@
 /* global fetch */
 import React from 'react'
 import ReactDOM from 'react-dom'
-import App from './App'
+
+import App from './components/App'
 import registerServiceWorker from './registerServiceWorker'
+
 import './index.css'
 
 fetch('https://sxmdq2484a.execute-api.us-east-1.amazonaws.com/dev/github-data', {

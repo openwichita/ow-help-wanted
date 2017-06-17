@@ -8,6 +8,7 @@ const ghRequest = resource => requestPromise({
   headers: {
     'user-agent': 'ow-help-wanted-service',
     'content-type': 'application/json',
+    'accept': 'application/vnd.github.mercy-preview+json',
     'authorization': `Basic ${authStr}`
   },
   uri: `https://api.github.com/${resource}`
