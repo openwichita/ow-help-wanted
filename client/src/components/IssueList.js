@@ -9,6 +9,7 @@ const IssueList = ({ issues }) => {
           <th>Issue</th>
           <th>Tags</th>
           <th>Opened On</th>
+          <th>Assigned To</th>
         </tr>
       </thead>
       <tbody>
