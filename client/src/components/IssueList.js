@@ -8,8 +8,8 @@ const IssueList = ({ issues }) => {
         <tr>
           <th>Issue</th>
           <th>Tags</th>
-          <th>Opened On</th>
-          <th>Assigned To</th>
+          <th className='date'>Opened On</th>
+          <th className='assignee'>Assigned To</th>
         </tr>
       </thead>
       <tbody>
