@@ -1,1 +1,19 @@
-
+.issue {
+  width: 60%;
+}
+.tags {
+  width: 20%
+}
+.date {
+  width: 10%;
+}
+.assignee {
+  width: 10%
+}
+.date, .assignee {
+  text-align: center;
+}
+img {
+  width: 1.5em;
+  height: 1.5em;
+}
