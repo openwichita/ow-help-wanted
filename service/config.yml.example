@@ -1,4 +1,10 @@
 stage: dev
 profile: default
-github_username: yourusername
-github_auth_token: dwhateveryourgithubauthtokenisgoeshere29
+github:
+  username: yourusername
+  auth_token: dwhateveryourgithubauthtokenisgoeshere29
+twitter:
+  consumer_key: jaosidjfaosidjfoasidjfo2asidjf9a84f
+  consumer_secret: jaosidjfaosidjfoasidjfo2asidjf9a84f
+  access_token_key: jaosidjfaosidjfoasidjfo2asidjf9a84f
+  access_token_secret: jaosidjfaosidjfoasidjfo2asidjf9a84f

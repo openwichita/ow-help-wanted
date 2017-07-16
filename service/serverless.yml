@@ -15,9 +15,9 @@ service: ow-help-wanted
 custom:
   config: ${file(config.yml)}
 
-# You can pin your service to only deploy with a specific Serverless version
-# Check out our docs for more details
-# frameworkVersion: "=X.X.X"
+plugins:
+  - serverless-dynamodb-local
+  - serverless-offline
 
 provider:
   name: aws
@@ -26,83 +26,58 @@ provider:
   stage: ${opt:stage, env:STAGE, self:custom.config.stage}
   region: us-east-1
 
-# you can overwrite defaults here
-
-# you can add statements to the Lambda function's IAM Role here
-#  iamRoleStatements:
-#    - Effect: "Allow"
-#      Action:
-#        - "s3:ListBucket"
-#      Resource: { "Fn::Join" : ["", ["arn:aws:s3:::", { "Ref" : "ServerlessDeploymentBucket" } ] ]  }
-#    - Effect: "Allow"
-#      Action:
-#        - "s3:PutObject"
-#      Resource:
-#        Fn::Join:
-#          - ""
-#          - - "arn:aws:s3:::"
-#            - "Ref" : "ServerlessDeploymentBucket"
-#            - "/*"
-
-# you can define service wide environment variables here
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      Resource:
+        - Fn::Join: [ ':', [ 'arn:aws:dynamodb', Ref: AWS::Region, Ref: AWS::AccountId, Fn::Join: [ '/', [ 'table', Ref: OWHelpWantedIssuesTable ] ] ] ]
+ 
+  # define service wide environment variables here
   environment:
-    GITHUB_AUTH_TOKEN: ${env:GITHUB_AUTH_TOKEN, self:custom.config.github_auth_token}
-    GITHUB_USERNAME: ${env:GITHUB_USERNAME, self:custom.config.github_username}
+    GITHUB_AUTH_TOKEN: ${env:GITHUB_AUTH_TOKEN, self:custom.config.github.auth_token}
+    GITHUB_USERNAME: ${env:GITHUB_USERNAME, self:custom.config.github.username}
 
-# you can add packaging information here
-#package:
-#  include:
-#    - include-me.js
-#    - include-me-dir/**
-#  exclude:
-#    - exclude-me.js
-#    - exclude-me-dir/**
+    TWITTER_CONSUMER_KEY: ${env:TWITTER_CONSUMER_KEY, self:custom.config.twitter.consumer_key}
+    TWITTER_CONSUMER_SECRET: ${env:TWITTER_CONSUMER_SECRET, self:custom.config.twitter.consumer_secret}
+    TWITTER_ACCESS_TOKEN_KEY: ${env:TWITTER_ACCESS_TOKEN_KEY, self:custom.config.twitter.access_token_key}
+    TWITTER_ACCESS_TOKEN_SECRET: ${env:TWITTER_ACCESS_TOKEN_SECRET, self:custom.config.twitter.access_token_secret}
+
+    ISSUES_TABLE: ${self:service}-${self:provider.stage}-IssuesTable
 
 functions:
   githubData:
-    handler: handler.githubData
+    handler: functions/github-data.get
     events:
       - http:
-          path: /github-data
+          path: /github/data
           method: get
           cors: true
+  githubWebhooksIssues:
+    handler: functions/github-webhooks.issues
+    events:
+      - http:
+          path: /github/webhooks/issues
+          method: post
+          cors: true
 
-#    The following are a few example events you can configure
-#    NOTE: Please make sure to change your handler code to work with those events
-#    Check the event documentation for details
-#      - s3: ${env:BUCKET}
-#      - schedule: rate(10 minutes)
-#      - sns: greeter-topic
-#      - stream: arn:aws:dynamodb:region:XXXXXX:table/foo/stream/1970-01-01T00:00:00.000
-#      - alexaSkill
-#      - iot:
-#          sql: "SELECT * FROM 'some_topic'"
-#      - cloudwatchEvent:
-#          event:
-#            source:
-#              - "aws.ec2"
-#            detail-type:
-#              - "EC2 Instance State-change Notification"
-#            detail:
-#              state:
-#                - pending
-#      - cloudwatchLog: '/aws/lambda/hello'
-#      - cognitoUserPool:
-#          pool: MyUserPool
-#          trigger: PreSignUp
-
-#    Define function environment variables here
-#    environment:
-#      variable2: value2
-
-# you can add CloudFormation resource templates here
-#resources:
-#  Resources:
-#    NewResource:
-#      Type: AWS::S3::Bucket
-#      Properties:
-#        BucketName: my-new-bucket
-#  Outputs:
-#     NewOutput:
-#       Description: "Description for the output"
-#       Value: "Some output value"
+resources:
+  Resources:
+    OWHelpWantedIssuesTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:provider.environment.ISSUES_TABLE}
+        AttributeDefinitions:
+          - AttributeName: issueId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: issueId
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1

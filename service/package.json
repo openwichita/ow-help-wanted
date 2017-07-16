@@ -4,7 +4,13 @@
   "main": "handler.js",
   "license": "MIT",
   "dependencies": {
-    "request": "^2.81.0",
-    "request-promise": "^4.2.1"
+    "request-promise": "^4.2.1",
+    "twitter": "^1.7.1",
+    "urlencode": "^1.1.0"
+  },
+  "devDependencies": {
+    "serverless-dynamodb-client": "0.0.2",
+    "serverless-dynamodb-local": "^0.2.22",
+    "serverless-offline": "^3.15.0"
   }
 }
