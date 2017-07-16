@@ -45,12 +45,17 @@ const githubWebhooks = {
 /**
  * Checks that the 'help wanted' label is applied, and checks DynamoDB
  * to see if we have processed this issue already.
+ *
+ * `true` === skip it
+ * `false === process it
  */
 const checkShouldIgnoreIssue = (eventData) => {
   const { issue, repository } = eventData
 
   // If 'help wanted' is not in the label list, we should ignore it
   if (!_.find(issue.labels, l => l.name === 'help wanted')) return Promise.resolve(true)
+  if (issue.state !== 'open') return Promise.resolve(true)
+  if (issue.assignee) return Promise.resolve(true)
 
   const resolver = (resolve, reject) => {
     db.get({
