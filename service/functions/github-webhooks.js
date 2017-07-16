@@ -32,7 +32,8 @@ const githubWebhooks = {
         const status = tweetContent(repoName, issueUrl)
 
         return twitter.post('statuses/update', { status })
-          .then(tweet => callback(null, { statusCode: 200 }))
+          .then(saveIssueAsProcessed(getIssueId(eventBody.issue, eventBody.repository)))
+          .then(() => callback(null, { statusCode: 200 }))
           // Catch this here so we can see the output in serverless logs,
           // otherwise it just shows `[Object object]`, which isn't very helpful
           .catch(err => Promise.reject(JSON.stringify(err)))
@@ -54,7 +55,7 @@ const checkShouldIgnoreIssue = (eventData) => {
   const resolver = (resolve, reject) => {
     db.get({
       TableName: process.env.ISSUES_TABLE,
-      Key: { issueId: `${repository.full_name}#${issue.number}` }
+      Key: { issueId: getIssueId(issue, repository) }
     }, (err, data) => {
       if (err) return reject(err)
       // If `Item` exists, we should ignore this one. If we haven't processed
@@ -66,6 +67,12 @@ const checkShouldIgnoreIssue = (eventData) => {
   return new Promise(resolver)
 }
 
+const saveIssueAsProcessed = (issueId) => db.put({
+  TableName: process.env.ISSUES_TABLE,
+  Item: { issueId, processed: true }
+}).promise()
+
+const getIssueId = (issue, repository) => `${repository.full_name}#${issue.number}`
 const tweetContent = (repo, url) => `New help wanted issue on ${repo}! ${url}`
 
 module.exports = githubWebhooks
