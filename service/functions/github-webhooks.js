@@ -79,6 +79,7 @@ const saveIssueAsProcessed = (issueId) => db.put({
 }).promise()
 
 const getIssueId = (issue, repository) => `${repository.full_name}#${issue.number}`
-const getTweetContent = (repo, title, url) => `Help wanted on ${repo}: "${title.substr(0, 65)}" ${url}`
+const truncateTo = (length, str) => str.length > length ? `${str.substr(0, length)}...` : str
+const getTweetContent = (repo, title, url) => `Help wanted on ${repo}: "${truncateTo(65, title)}" ${url}`
 
 module.exports = githubWebhooks
