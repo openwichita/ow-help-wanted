@@ -27,9 +27,10 @@ const githubWebhooks = {
       .then(shouldIgnore => {
         if (shouldIgnore) return callback(null, { statusCode: 200 })
 
-        const repoName = eventBody.repository.name
+        const repoName = eventBody.repository.full_name
+        const issueTitle = eventBody.issue.title
         const issueUrl = eventBody.issue.html_url
-        const status = tweetContent(repoName, issueUrl)
+        const status = getTweetContent(repoName, issueTitle, issueUrl)
 
         return twitter.post('statuses/update', { status })
           .then(saveIssueAsProcessed(getIssueId(eventBody.issue, eventBody.repository)))
@@ -78,6 +79,6 @@ const saveIssueAsProcessed = (issueId) => db.put({
 }).promise()
 
 const getIssueId = (issue, repository) => `${repository.full_name}#${issue.number}`
-const tweetContent = (repo, url) => `New help wanted issue on ${repo}! ${url}`
+const getTweetContent = (repo, title, url) => `Help wanted on ${repo}: "${title.substr(0, 65)}" ${url}`
 
 module.exports = githubWebhooks
