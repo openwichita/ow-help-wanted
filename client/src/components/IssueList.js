@@ -3,7 +3,7 @@ import IssueRow from './IssueRow'
 
 const IssueList = ({ issues }) => {
   return (
-    <table className='table table-bordered'>
+    <table className='table table-striped'>
       <thead>
         <tr>
           <th>Issue</th>

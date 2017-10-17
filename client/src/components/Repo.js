@@ -14,9 +14,7 @@ const Repo = ({ repo: { repo, issues } }) => {
   return (
     <div className='panel panel-default'>
       <div className='panel-heading'>
-        <h3>
           <a href={repo.html_url}>{repo.name}</a>
-        </h3>
       </div>
       <div className='panel-body'>
         <p>{repo.description}</p>

@@ -1,3 +1,96 @@
+@import url('//fonts.googleapis.com/css?subset=latin,cyrillic-ext,latin-ext,cyrillic&family=Open+Sans+Condensed:300|Open+Sans:400,600,400italic,600italic|Merriweather:400,300,300italic,400italic,700,700italic|Roboto+Slab:400,300');
+
+body {
+  font-family: "Merriweather", "Open Sans", "Helvetica Neue", Helvetica, Arial, "Nimbus L", sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6, th, dt, .panel-heading {
+  font-family: "Roboto Slab", "Merriweather", "Open Sans", "Helvetica Neue", Helvetica, Arial, "Nimbus L", sans-serif
+}
+
+.label {
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, "Nimbus L", sans-serif;
+}
+
+a, a:visited {
+  text-decoration: none;
+  transition: color ease 0.7s;
+  color: #f05948;
+}
+a:hover {
+  text-decoration: none;
+  color: #c62310;
+}
+
+#site-head {
+  margin: 20px auto;
+  max-width: 600px;
+  width: 90%;
+}
+.site-title {
+  background-image: url('/img/open-wichita-final.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  height: 312px;
+  text-indent: -9999px;
+  font-size: 160px;
+  line-height: 180px;
+  font-weight: bold;
+  margin-top: 80px;
+  margin-bottom: 5px;
+  padding: 0;
+}
+nav {
+  border-bottom: 1px solid #ecf0f1;
+  border-top: 1px solid #ecf0f1;
+  margin-bottom: 2em;
+  text-align: center;
+  margin: 20px auto 4rem auto;
+  padding: 0;
+  max-width: 600px;
+}
+nav ul {
+  list-style: none;
+  margin: 0 auto;
+  padding: 0;
+  width: 100%;
+  overflow: hidden;
+  text-align: center;
+}
+nav ul li {
+  display: inline-block;
+  font-family: "Open Sans Condensed", "Open Sans", "Helvetica Neue", Helvetica, Arial, "Nimbus L", sans-serif;
+  font-size: 18px;
+  font-weight: 300;
+  margin: 0;
+  padding: 0 .5em;
+  text-align: center;
+  text-transform: uppercase;
+}
+nav ul li a {
+  display: block;
+  padding: .5em 0;
+}
+
+.panel {
+  border-radius: 0;
+  border-color: #ecf0f1;
+  margin-bottom: 4rem;
+}
+.panel-default > .panel-heading {
+  color: #fff;
+  font-size: 36px;
+  background-color: transparent;
+  border-color: #ecf0f1;
+  border-bottom: 1px solid #ddd;
+}
+
+.table > tbody > tr > td {
+  vertical-align: middle;
+  padding: 12px 8px;
+}
+
 .issue {
   width: 60%;
 }
