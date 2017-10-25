@@ -1,9 +1,20 @@
 import React from 'react'
 import Repo from './Repo'
+import withData from './withData'
 
 const sortRepos = repos => repos.sort((a, b) => new Date(b.repo.pushed_at) - new Date(a.repo.pushed_at))
 
-const App = ({ data }) => {
+const styles = {
+  big: {
+    fontSize: '36px',
+    textAlign: 'center',
+    marginTop: '50vh'
+  }
+}
+
+const App = ({ data, isLoading }) => {
+  if (isLoading) return <div style={styles.big}>Loading Issues...</div>
+
   return (
     <div className='container'>
       <div className='row App-header'>
@@ -21,4 +32,4 @@ const App = ({ data }) => {
   )
 }
 
-export default App
+export default withData()(App)
