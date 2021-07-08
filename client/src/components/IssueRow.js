@@ -10,7 +10,7 @@ const IssueRow = ({ issue }) => {
       </td>
       <td className='tags'>{issue.labels.map(l => l.name).join(', ')}</td>
       <td className='date'>{moment(issue.created_at).format('MMM D, YYYY')}</td>
-      <td className='assignee'>{issue.assignees.map(assignee => (<Assignees assignee={assignee} />))}</td>
+      <td className='assignee'>{issue.assignees.map(assignee => (<Assignees assignee={assignee} key={assignee.id} />))}</td>
     </tr>
   )
 }

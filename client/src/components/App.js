@@ -14,7 +14,7 @@ const App = ({ data }) => {
 
       <div className='row App-body'>
         <div className='col-xs-12'>
-          {sortRepos(data).map(repo => (<Repo repo={repo} />))}
+          {sortRepos(data).map(repo => (<Repo repo={repo} key={repo.repo.id} />))}
         </div>
       </div>
     </div>

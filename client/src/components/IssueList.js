@@ -13,7 +13,7 @@ const IssueList = ({ issues }) => {
         </tr>
       </thead>
       <tbody>
-        {issues.map(issue => <IssueRow issue={issue} />)}
+        {issues.map(issue => <IssueRow issue={issue} key={issue.id} />)}
       </tbody>
     </table>
   )
